@@ -1,0 +1,32 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "eu.ansvar/slovak-financial-regulation-mcp",
+  "description": "Query NBS opatrenia on capital requirements, metodické usmernenia, rozhodnutia, and enforcement actions",
+  "repository": {
+    "url": "https://github.com/Ansvar-Systems/slovak-financial-regulation-mcp",
+    "source": "github"
+  },
+  "homepage": "https://ansvar.eu",
+  "version": "0.1.0",
+  "license": "Apache-2.0",
+  "keywords": [
+    "nbs",
+    "narodna-banka-slovenska",
+    "slovak-financial-regulation",
+    "capital-requirements",
+    "compliance",
+    "enforcement",
+    "mcp",
+    "ansvar"
+  ],
+  "packages": [
+    {
+      "registryType": "npm",
+      "identifier": "@ansvar/slovak-financial-regulation-mcp",
+      "version": "0.1.0",
+      "transport": {
+        "type": "stdio"
+      }
+    }
+  ]
+}
