@@ -1,18 +1,23 @@
 FROM node:20-slim AS builder
 WORKDIR /app
 COPY package.json package-lock.json* ./
-RUN npm ci --ignore-scripts
+# Full install (with scripts) so better-sqlite3 builds its native binding
+RUN npm ci
 COPY tsconfig.json ./
 COPY src/ src/
 RUN npm run build
+
+# Prune dev deps for the production stage; keep the prebuilt better-sqlite3 binding
+RUN npm prune --omit=dev
 
 FROM node:20-slim AS production
 WORKDIR /app
 ENV NODE_ENV=production
 ENV NBS_DB_PATH=/app/data/nbs.db
 COPY package.json package-lock.json* ./
-RUN npm ci --omit=dev --ignore-scripts && npm cache clean --force
+COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/dist/ dist/
+COPY data/database.db data/nbs.db
 RUN addgroup --system --gid 1001 mcp && \
     adduser --system --uid 1001 --ingroup mcp mcp && \
     chown -R mcp:mcp /app
